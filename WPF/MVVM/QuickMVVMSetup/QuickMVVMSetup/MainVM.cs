@@ -15,7 +15,6 @@ namespace QuickMVVMSetup
 {
     public class MainVM : INotifyPropertyChanged
     {
-        [DoNotNotify]
         public Person TargetPerson { get; set; }
         public ObservableCollection<Person> Persons { get; set; }
         public void AddPerson(object obj)
@@ -27,14 +26,13 @@ namespace QuickMVVMSetup
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public DelegateCommand CMDAdd
+        public DelegateCommand<Person> CMDAdd
         { get; private set; }
         
       
         public DelegateCommand<Person> CMDDelete => new DelegateCommand<Person>(DeletePerson);
         //public ICommand CMDDelete => this.bb ?? (this.bb = new RelayCommand<Person>(DeletePerson));
-        //public ICommand CMDDelete => new DelegateCommand<Person>(DeletePerson);
-        CMDAdd =  
+        //public ICommand CMDDelete => new DelegateCommand<Person>(DeletePerson); 
         private void DeletePerson(Person obj)
         {
             if (obj == null) return;
@@ -47,6 +45,7 @@ namespace QuickMVVMSetup
         {
             Persons = new ObservableCollection<Person>();
             TargetPerson = new Person();
+            CMDAdd = new DelegateCommand<Person>(AddPerson);
         }
 
     }
