@@ -7,36 +7,34 @@ using System.ComponentModel;
 using System.Windows.Input;
 using System.Collections.ObjectModel;
 using Haley.Models;
-using Haley.Abstractions;
-using Haley.MVVM;
+using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
+using PropertyChanged;
 
 namespace QuickMVVMSetup
 {
-    public class MainVM : ChangeNotifier
+    public class MainVM : INotifyPropertyChanged
     {
-        private Person person;
-        public Person TargetPerson
-        {
-            get { return person; }
-            set { person = value; OnPropertyChanged(nameof(TargetPerson)); }
-        }
-
-        private ObservableCollection<Person> _persons; //ONLY WHEN ADDED/OR REMOVED (NOT FOR INTERNAL PROPERTY CHANGES)
-        public ObservableCollection<Person> Persons
-        {
-            get { return _persons; }
-            set { _persons = value; }
-        }
-
-        public void AddPerson()
+        [DoNotNotify]
+        public Person TargetPerson { get; set; }
+        public ObservableCollection<Person> Persons { get; set; }
+        public void AddPerson(object obj)
         {
             Persons.Add(TargetPerson); //Add it to thecollection
             TargetPerson = new Person(); //resetting it.
         }
+        private RelayCommand<Person> bb;
 
-        public ICommand CMDAdd => new DelegateCommand(AddPerson);
-        public ICommand CMDDelete => new DelegateCommand<Person>(DeletePerson);
+        public event PropertyChangedEventHandler PropertyChanged;
 
+        public DelegateCommand CMDAdd
+        { get; private set; }
+        
+      
+        public DelegateCommand<Person> CMDDelete => new DelegateCommand<Person>(DeletePerson);
+        //public ICommand CMDDelete => this.bb ?? (this.bb = new RelayCommand<Person>(DeletePerson));
+        //public ICommand CMDDelete => new DelegateCommand<Person>(DeletePerson);
+        CMDAdd =  
         private void DeletePerson(Person obj)
         {
             if (obj == null) return;
@@ -50,5 +48,6 @@ namespace QuickMVVMSetup
             Persons = new ObservableCollection<Person>();
             TargetPerson = new Person();
         }
+
     }
 }

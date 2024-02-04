@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:QuickMVVMSetup"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <local:VMLocator x:Key="VM"></local:VMLocator>
     </Application.Resources>
 </Application>

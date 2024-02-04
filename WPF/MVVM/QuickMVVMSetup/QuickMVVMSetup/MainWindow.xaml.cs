@@ -23,7 +23,6 @@ namespace QuickMVVMSetup
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new MainVM(); //Connecting the view with viewmodel
         }
     }
 }

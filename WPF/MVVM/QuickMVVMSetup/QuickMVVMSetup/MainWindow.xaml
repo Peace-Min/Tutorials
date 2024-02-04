@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:QuickMVVMSetup"
         x:Name="WndwMain"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="400">
+        Title="MainWindow" Height="450" Width="400"  DataContext="{Binding Source={StaticResource VM}, Path=MainVM}" >
     <Window.Resources>
         <ResourceDictionary>
             <Style TargetType="{x:Type ItemsControl}">

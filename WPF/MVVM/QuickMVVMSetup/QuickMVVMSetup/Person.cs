@@ -4,35 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
-using Haley.Models;
-using Haley.Abstractions;
-using Haley.MVVM;
-
+using GalaSoft.MvvmLight.Views;
+using GalaSoft.MvvmLight;
+using CommonServiceLocator;
+using PropertyChanged;
 namespace QuickMVVMSetup
 {
-    public class Person : ChangeNotifier
+    public class Person : INotifyPropertyChanged
     {
-        private string _FName;
-        public string FName
-        {
-            get { return _FName; }
-            set { _FName = value; OnPropertyChanged(nameof(FName)); }
-        }
-
-        private string _LName;
+        public string FName { get; set; }
         public string LName
-        {
-            get { return _LName; }
-            set { _LName = value; OnPropertyChanged(nameof(LName)); }
-        }
+        { get; set; }
 
-        private string _Age;
-        public string Age
-        {
-            get { return _Age; }
-            set { _Age = value; OnPropertyChanged(nameof(Age)); }
-        }
+        public string Age { get; set; }
 
         public Person() { }
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }
